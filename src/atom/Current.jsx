@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import cuaca from "../assets/cuaca.png";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 function Current({ data }) {
   const [forecast, setForecast] = useState("");
   // const wheaterText = () => {
@@ -38,7 +39,6 @@ function Current({ data }) {
   async function getData(data) {
     if (data) {
       const dataS = await data.data;
-      console.log(dataS);
       setForecast(dataS);
     } else {
       setForecast(null);
@@ -85,12 +85,12 @@ function Current({ data }) {
           </div>
           <div className="flex gap-1 items-end">
             <p className="text-sm text-blue-500">Detailed</p>
-            <button>
+            <Link to={"/detailed"}>
               <FontAwesomeIcon
                 icon={faUpRightFromSquare}
                 className="text-sm text-blue-500"
               />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

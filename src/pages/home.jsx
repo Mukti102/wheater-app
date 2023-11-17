@@ -1,14 +1,14 @@
 import * as React from "react";
 import { faHouse, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Card from "./Card";
-import Current from "./Current";
-import Input from "./Input";
+import Card from "../atom/Card";
+import Current from "../atom/Current";
+import Input from "../atom/Input";
 import axios from "axios";
 import { connect } from "react-redux";
 
 function Home({ globalData, getData }) {
-  const [inputCity, setInputCity] = React.useState("");
+  const [inputCity, setInputCity] = React.useState("Jakarta");
   const url = `http://api.weatherapi.com/v1/forecast.json?key=c85a7a89639845f4ae344951231211&q=${inputCity}&days=4&aqi=no&alerts=no`;
 
   React.useEffect(() => {
@@ -16,7 +16,6 @@ function Home({ globalData, getData }) {
       try {
         const res = await axios.get(url);
         getData(res);
-        console.log(res);
       } catch (err) {
         console.log("error", err);
         alert("Kota tidak di temukan");
@@ -24,6 +23,7 @@ function Home({ globalData, getData }) {
     }
     getdata();
   }, [inputCity]);
+  console.log("redux-reducer", globalData);
   const catchData = (data) => {
     setInputCity(data);
   };
@@ -34,9 +34,7 @@ function Home({ globalData, getData }) {
       <Input onDataFromInput={catchData} />
       <Current />
       {/* other city */}
-      <div className="my-4">
-        <h1 className="ml-10 text-slate-200 font-semibold mb-2">Perkiraan</h1>
-      </div>
+
       {/* scroll card */}
       <Card />
       <div className="w-[80%]  h-20 bg-slate-100 flex items-center mx-auto rounded-3xl bottom-0 justify-between gap-5 px-6">

@@ -16,7 +16,10 @@ function Card({ data }) {
     getData(data);
   }, [data]);
   return (
-    <div className="w-full h-max relative mb-20 ">
+    <div className="w-full h-max relative mb-20 mt-16">
+      <div className="my-4">
+        <h1 className="ml-10 text-slate-200 font-semibold mb-2">Perkiraan</h1>
+      </div>
       <div className="scroll-bar w-screen overflow-x-scroll pl-6">
         <div className="w-fit flex gap-2 h-max">
           {forecast ? (
@@ -63,30 +66,28 @@ function Card({ data }) {
               </div>
             ))
           ) : (
-            <div className="w-fit flex gap-2 h-max">
-              <div className="w-52 h-[140px] flex flex-col gap-3 bg-slate-800 rounded-3xl bg-opacity-50 p-4">
-                <div className="flex gap-1 items-center justify-start">
-                  <div className="w-12">
-                    <img src={Sun} alt="" className="w-full" />
-                  </div>
-                  <div>
-                    <p className="text-[11px] text-slate-400">Location</p>
-                    <h1 className="text-lg text-slate-50">Jakarta</h1>
-                  </div>
+            <div className="w-52 h-[140px] flex flex-col gap-3 bg-slate-800 rounded-3xl bg-opacity-50 p-4">
+              <div className="flex gap-1 items-center justify-start">
+                <div className="w-12">
+                  <img src={Sun} alt="" className="w-full" />
                 </div>
-                <div className="flex justify-around">
-                  <div className="-space-y-1">
-                    <p className="text-blue-500 text-[11px]">wind</p>
-                    <h1 className="text-slate-200 text-2xl ">128</h1>
-                  </div>
-                  <div className="-space-y-1">
-                    <p className="text-blue-500 text-[11px]">wind</p>
-                    <h1 className="text-slate-200 text-2xl ">128</h1>
-                  </div>
-                  <div className="-space-y-1">
-                    <p className="text-blue-500 text-[11px]">wind</p>
-                    <h1 className="text-slate-200 text-2xl ">128</h1>
-                  </div>
+                <div>
+                  <p className="text-[11px] text-slate-400">Tanggal</p>
+                  <h1 className="text-[12px] text-slate-50">cuaca hari ini</h1>
+                </div>
+              </div>
+              <div className="flex justify-around">
+                <div className="-space-y-0">
+                  <p className="text-blue-500 text-[11px]">wind</p>
+                  <h1 className="text-slate-200 text-[18px] ">0.0</h1>
+                </div>
+                <div className="-space-y-0">
+                  <p className="text-blue-500 text-[10px]">Temp</p>
+                  <h1 className="text-slate-200 text-[18px] ">0°c</h1>
+                </div>
+                <div className="-space-y-0">
+                  <p className="text-blue-500 text-[9px]">Humidity</p>
+                  <h1 className="text-slate-200 text-[18px] ">0%</h1>
                 </div>
               </div>
             </div>
