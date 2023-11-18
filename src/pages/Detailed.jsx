@@ -4,11 +4,18 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import UV from "../assets/uv-index.png";
+import Eye from "../assets/eye.png";
+import humidity from "../assets/humidity.png";
+import cloud from "../assets/cloud.png";
+import blood from "../assets/blood-pressure.png";
+import evaporation from "../assets/evaporation.png";
 
-function Detailed({ detailedData }) {
+function Detailed() {
   const [detailedCurrent, setDetailedCurrent] = useState([]);
   const [detailedForecast, setDetailedForecast] = useState([]);
   const [detailedLocation, setDetailedLocation] = useState([]);
+  const detailedData = JSON.parse(localStorage.getItem("setData"));
   console.log("detailed", detailedData);
   async function getDetailedData(detailedData) {
     if (detailedData) {
@@ -16,9 +23,6 @@ function Detailed({ detailedData }) {
       setDetailedLocation(detailed.data.location);
       setDetailedCurrent(detailed.data.current);
       setDetailedForecast(detailed.data.forecast.forecastday[1].hour);
-      console.log("detailed-location", detailedLocation);
-      console.log("detailed-current", detailedCurrent);
-      console.log("detailed-forecast", detailedForecast);
     } else {
       setDetailedCurrent(null);
       console.log("detailedData is Empty");
@@ -26,7 +30,7 @@ function Detailed({ detailedData }) {
   }
   useEffect(() => {
     getDetailedData(detailedData);
-  }, [detailedData]);
+  }, []);
 
   const getDate = (time) => {
     const waktuString = time;
@@ -43,7 +47,19 @@ function Detailed({ detailedData }) {
       return nomor < 10 ? "0" + nomor : nomor;
     }
   };
-  console.log(getDate());
+
+  function getDateCurrent() {
+    const date = new Date();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const second = date.getSeconds();
+    return padZero(hour) + ":" + padZero(minutes);
+
+    // Fungsi untuk menambahkan nol di depan angka jika kurang dari 10
+    function padZero(nomor) {
+      return nomor < 10 ? "0" + nomor : nomor;
+    }
+  }
   return (
     <div className="w-screen h-screen bg-slate-50">
       <div className="w-full h-64 bg-gradient-to-tr flex justify-center items-center from-primary to-second rounded-b-[35px]">
@@ -74,7 +90,7 @@ function Detailed({ detailedData }) {
             </div>
             <div className="w-full flex justify-end pr-3">
               <span className="text-[10px] text-slate-300">
-                {"30.00"} pm WIB
+                {getDateCurrent()} WIB
               </span>
             </div>
           </div>
@@ -83,7 +99,7 @@ function Detailed({ detailedData }) {
       </div>
       <div className="w-full flex flex-col  gap-4 mt-8">
         <div className="w-full flex justify-between px-5">
-          <h1>Forecast</h1>
+          <h1>Perkiraan</h1>
           <button className="w-max bg-second text-slate-100  px-2 py-1 text-sm font-light rounded-md">
             Next Hour
           </button>
@@ -115,12 +131,62 @@ function Detailed({ detailedData }) {
       <div className="w-full h-screen  flex flex-col rounded-[60px]  mt-16 shadow-custom bg-slate-100 px-8">
         <div className="w-[60px] h-[5px] bg-second mt-7 mx-auto rounded-full"></div>
         <div className="w-full h-max flex flex-wrap justify-center gap-y-0 gap-x-3">
-          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6"></div>
-          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6"></div>
-          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6"></div>
-          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6"></div>
-          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6"></div>
-          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6"></div>
+          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6 flex items-center px-3 gap-2">
+            <div className="w-1/4">
+              <img src={UV} alt="" className="w-full" />
+            </div>
+            <div>
+              <h1 className="font-semibold text-sm">UV Index</h1>
+              <span className="text-[13px]">{detailedCurrent.uv} of 10</span>
+            </div>
+          </div>
+          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6 flex items-center px-3 gap-2">
+            <div className="w-1/4">
+              <img src={Eye} alt="" className="w-full" />
+            </div>
+            <div>
+              <h1 className="font-semibold text-sm">Visibilitas</h1>
+              <span className="text-[13px]">{detailedCurrent.vis_km} Km</span>
+            </div>
+          </div>
+          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6 flex items-center px-3 gap-2">
+            <div className="w-1/4">
+              <img src={humidity} alt="" className="w-full" />
+            </div>
+            <div>
+              <h1 className="font-semibold text-sm">Kelembapan</h1>
+              <span className="text-[13px]">{detailedCurrent.humidity}%</span>
+            </div>
+          </div>
+          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6 flex items-center px-3 gap-2">
+            <div className="w-1/4">
+              <img src={cloud} alt="" className="w-full" />
+            </div>
+            <div>
+              <h1 className="font-semibold text-sm">Tiupan</h1>
+              <span className="text-[13px]">
+                {detailedCurrent.gust_kph} kph
+              </span>
+            </div>
+          </div>
+          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6 flex items-center px-3 gap-2">
+            <div className="w-1/4">
+              <img src={blood} alt="" className="w-full" />
+            </div>
+            <div>
+              <h1 className="font-semibold text-sm">Tekanan</h1>
+              <span className="text-[13px]">{detailedCurrent.pressure_in}</span>
+            </div>
+          </div>
+          <div className="w-40 h-[80px] rounded-3xl bg-slate-100  border-[2.5px] border-slate-300 mt-6 flex items-center px-3 gap-2">
+            <div className="w-1/4">
+              <img src={evaporation} alt="" className="w-full" />
+            </div>
+            <div>
+              <h1 className="font-semibold text-sm">Pengendapan</h1>
+              <span className="text-[13px]">{detailedCurrent.precip_in}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
