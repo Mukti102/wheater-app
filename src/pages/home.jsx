@@ -12,16 +12,9 @@ import Input from "../atom/Input";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
-// Initialize AOS in your component
-AOS.init({
-  // Global settings:
-  // disable: "mobile", // disable animation on mobile devices
-  duration: 800, // animation duration in milliseconds
-  easing: "ease-in-out", // animation easing
-});
+
+
 
 function Home({ globalData, getData }) {
   const [inputCity, setInputCity] = React.useState("Jakarta");
@@ -45,7 +38,7 @@ function Home({ globalData, getData }) {
       }
     }
     getdata();
-    AOS.refresh();
+
   }, [inputCity]);
   console.log("redux-reducer", globalData);
   const catchData = (data) => {
@@ -62,8 +55,7 @@ function Home({ globalData, getData }) {
       {/* scroll card */}
       <Card />
       <div
-        // data-aos="fade-up"
-        // data-aos-duration="1000"
+
         className="w-[80%]  h-20 bg-slate-100 flex items-center mx-auto rounded-3xl bottom-0 justify-between gap-5 px-6"
       >
         <div className="flex items-center justify-center">
